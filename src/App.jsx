@@ -1,14 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import {fetchDataFromApi} from './utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { getApiConfiguration, getGenres } from './store/homeSlice';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch();
+  const {url} = useSelector((state) => state.home);
+  useEffect(()=>{
+      apiTesting();
+  },[])
+
+  const apiTesting = ()=>{
+    fetchDataFromApi('/movie/popular').then((res)=>{
+      console.log(res);
+      dispatch(getApiConfiguration(res));
+    })
+  }
 
   return (
     <>
-      <header>Hi</header>
+      <header>{url.data?.total_pages}</header>
     </>
   )
 }
