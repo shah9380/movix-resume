@@ -36,6 +36,7 @@ const Carousel = ({data, loading}) => {
             </div>
         )
     }
+    const arr = [1,2,3,4,5];
   return (
     <div className="carousel">
         <ContentWrapper>
@@ -69,7 +70,17 @@ const Carousel = ({data, loading}) => {
                     )
                 })}
             </div>):(<div className="loadingSkeleton">
-
+                    {
+                        arr.map(()=>{
+                            return <div className="skeletonItem">
+                            <div className="posterBlock skeleton"></div>
+                            <div className="textBlock">
+                                <div className="title skeleton"></div>
+                                <div className="date skeleton"></div>
+                            </div>
+                        </div>
+                        })
+                    }
             </div>)}
         </ContentWrapper>
     </div>
