@@ -11,7 +11,8 @@ import ContentWrapper from "../contentWrapper/ContentWrapper";
 import Img from "../lazyLoading/img";
 import PosterFallback from "../../assets/no-poster.png";
 import './Carousel.scss';
-import CircleRating from "../circleRating.jsx/CircleRating";
+import CircleRating from "../circleRating/CircleRating";
+import Genres from "../genres/Genres";
 
 const Carousel = ({data, loading}) => {
     const carouselContainner = useRef();
@@ -20,11 +21,15 @@ const Carousel = ({data, loading}) => {
     console.log(data);
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        console.log(data);
-    },[data])
     const navigation = (direction)=>{
-        
+        const container = carouselContainner.current;
+
+        const scrollAmount = direction === "left" ? container.scrollLeft - (container.offsetWidth + 20) : container.scrollLeft + (container.offsetWidth + 20);
+
+        container.scrollTo({
+            left: scrollAmount,
+            behaviour: "smooth"
+        })
     }
     const skItem = ()=>{
         return(
@@ -50,14 +55,16 @@ const Carousel = ({data, loading}) => {
                 onClick={()=> navigation("right")}
             >
             </BsFillArrowRightCircleFill>
-            {!loading ? (<div className="carouselItems">
+            {!loading ? (<div className="carouselItems" ref={carouselContainner}>
                 {data?.map((item) => {
                     const posterUrl = item.poster_path ? url.poster + item.poster_path : PosterFallback;
                     return(
-                       <div key={item.id} className="carouselItem">
+                       <div key={item.id} className="carouselItem" onClick={()=>{
+                            navigate(`/${item.media_type}/${item.id}`)
+                       }}>
                             <div className="posterBlock">
                                 <Img src={posterUrl}></Img>
-                                <CircleRating rating={item.vote_average.toFixed(1)}/>
+                                <CircleRating  rating={item.vote_average.toFixed(1)}></CircleRating>
                             </div>
                             <div className="textBlock">
                                 <span className="title">
@@ -66,7 +73,9 @@ const Carousel = ({data, loading}) => {
                                 <span className="date">
                                     {dayjs(item.first_air_date).format('MMM DD YYYY') || "N/A"}
                                 </span>
+                                {/* <Genres data={item.genre_ids.slice(0, 2)}></Genres> */}
                             </div>
+                            
                        </div> 
                     )
                 })}
