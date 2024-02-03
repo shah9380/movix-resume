@@ -12,6 +12,7 @@ const Home = () => {
         <HeroBanner></HeroBanner>
         <Trending></Trending>
         <div style={{height: 1000}}></div>
+        <SwitchTabs data={["day", "week"]} onTabChange={onTabChange}></SwitchTabs>
     </div>
   )
 }

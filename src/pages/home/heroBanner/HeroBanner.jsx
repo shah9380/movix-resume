@@ -10,15 +10,14 @@ import ContentWrapper from '../../../components/contentWrapper/ContentWrapper';
 const HeroBanner = () => {
     const[banner,setBanner]=useState("");
     const[query,setQuery] = useState("");
-    const{ url } = useSelector((state)=> state
-    .home);
+    const{ url } = useSelector((state)=> state.home);
     const navigate = useNavigate();
 
     const {data, loading} = useFetch("/movie/upcoming");
     useEffect(()=>{
-            const bg = url.backdrop + data?.data?.results[Math.floor(Math.random() * 20)]?.backdrop_path ;
+            const bg = url?.backdrop + data?.results[Math.floor(Math.random() * 20)]?.backdrop_path ;
             setBanner(bg);
-    },[data])
+    },[data, url])
     const searchQueryHandler = (e)=>{
         if(e.key === "Enter" && query.length > 0){
             navigate(`/search/${query}`);
@@ -27,7 +26,7 @@ const HeroBanner = () => {
   return (
     <div className="heroBanner">
         {!loading && <div className="backdrop-img">
-            <Img src={"https://image.tmdb.org/t/p/original/8kgfR6KwCwc6WA2AY1wqBXkYpEy.jpg"} className="lazy-load"></Img>
+            <Img src={banner+""} className="lazy-load"></Img>
         </div>}
         <div className="opacity-layer"></div>
         <ContentWrapper>
