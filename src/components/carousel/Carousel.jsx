@@ -11,6 +11,7 @@ import ContentWrapper from "../contentWrapper/ContentWrapper";
 import Img from "../lazyLoading/img";
 import PosterFallback from "../../assets/no-poster.png";
 import './Carousel.scss';
+import CircleRating from "../circleRating.jsx/CircleRating";
 
 const Carousel = ({data, loading}) => {
     const carouselContainner = useRef();
@@ -36,7 +37,6 @@ const Carousel = ({data, loading}) => {
             </div>
         )
     }
-    const arr = [1,2,3,4,5];
   return (
     <div className="carousel">
         <ContentWrapper>
@@ -57,6 +57,7 @@ const Carousel = ({data, loading}) => {
                        <div key={item.id} className="carouselItem">
                             <div className="posterBlock">
                                 <Img src={posterUrl}></Img>
+                                <CircleRating rating={item.vote_average.toFixed(1)}/>
                             </div>
                             <div className="textBlock">
                                 <span className="title">
@@ -70,17 +71,11 @@ const Carousel = ({data, loading}) => {
                     )
                 })}
             </div>):(<div className="loadingSkeleton">
-                    {
-                        arr.map(()=>{
-                            return <div className="skeletonItem">
-                            <div className="posterBlock skeleton"></div>
-                            <div className="textBlock">
-                                <div className="title skeleton"></div>
-                                <div className="date skeleton"></div>
-                            </div>
-                        </div>
-                        })
-                    }
+                    {skItem()}
+                    {skItem()}
+                    {skItem()}
+                    {skItem()}
+                    {skItem()}
             </div>)}
         </ContentWrapper>
     </div>
