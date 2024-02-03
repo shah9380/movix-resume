@@ -24,15 +24,20 @@ function App() {
   },[])
 
   const apiTesting = ()=>{
-    fetchDataFromApi('/movie/popular').then((res)=>{
-      console.log(res);
-      dispatch(getApiConfiguration(res));
+    fetchDataFromApi('/configuration').then((res)=>{
+      console.log(res.data.images.secure_base_url);
+      const url = {
+        backdrop: res.data.images.secure_base_url + "original",
+        poster: res.data.images.secure_base_url + "original",
+        profile: res.data.images.secure_base_url + "original",
+      }
+      dispatch(getApiConfiguration(url));
     })
   }
 
   return (
     <BrowserRouter>
-      {/* <Header></Header> */}
+      <Header></Header>
         <Routes>
             <Route path='/' element={<Home />}></Route>
             <Route path='/:mediaType/:id' element={<Details />}></Route>
@@ -40,7 +45,7 @@ function App() {
             <Route path='/explore/:mediaType' element={<Explore></Explore>}></Route>
             <Route path='*' element={<Error></Error>}></Route>
         </Routes>
-      {/* <Footer></Footer> */}
+      <Footer></Footer>
     </BrowserRouter>
   )
 }
