@@ -82,6 +82,12 @@
                     line-height: 28px;
                 }
             }
+            .row {
+                display: flex;
+                align-items: center;
+                gap: 25px;
+                margin-bottom: 25px;
+            }
             .genres {
                 margin-bottom: 25px;
                 flex-flow: row wrap;
@@ -153,12 +159,7 @@
                     }
                 }
             }
-            .row {
-                display: flex;
-                align-items: center;
-                gap: 25px;
-                margin-bottom: 25px;
-            }
+            
 
             .info {
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
